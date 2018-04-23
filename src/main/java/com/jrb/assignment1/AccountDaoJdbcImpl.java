@@ -1,4 +1,4 @@
-package com.jrb.Assignment1;
+package com.jrb.assignment1;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Collections;

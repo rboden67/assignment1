@@ -1,8 +1,7 @@
-package com.jrb.Assignment1;
+package com.jrb.assignment1;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
-
 
 /**
  * @author
