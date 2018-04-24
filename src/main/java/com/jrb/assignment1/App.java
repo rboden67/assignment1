@@ -49,6 +49,9 @@ public class App {
 		System.out.println(member.toString());
 
 		// account.setBalance(30.0);
+		
+		// delete member
+		memberDao.delete("A123");
 
 		applicationContext.close();
 	}

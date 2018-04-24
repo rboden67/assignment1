@@ -31,11 +31,11 @@ public class MemberDaoJdbcImpl implements MemberDao {
 
 	public void insert(Member member) {
 		PreparedStatementCreatorFactory psCreatorFactory = new PreparedStatementCreatorFactory(
-				"insert into tblMembers (MemId, LastName, FirstName, MiddleName, Status, Password) values(?,?,?,?,?,?)",
-				new int[] { Types.CHAR, Types.CHAR, Types.CHAR, Types.CHAR, Types.CHAR, Types.CHAR });
+				"insert into tblMembers (MemId, LastName, FirstName, MiddleName, Status, Memdt, Password) values(?,?,?,?,?,?,?)",
+				new int[] { Types.CHAR, Types.CHAR, Types.CHAR, Types.CHAR, Types.CHAR, Types.DATE, Types.CHAR });
 		int count = jdbcTemplate.update(
 				psCreatorFactory.newPreparedStatementCreator(new Object[] { member.getMemid(), member.getLastname(),
-						member.getFirstname(), member.getMiddlename(), member.getStatus(), member.getPassword() }));
+						member.getFirstname(), member.getMiddlename(), member.getStatus(), member.getMemdt(), member.getPassword() }));
 		if (count != 1)
 			throw new InsertFailedException("Cannot insert member");
 	}
@@ -46,11 +46,10 @@ public class MemberDaoJdbcImpl implements MemberDao {
 				member.getPassword());
 		if (count != 1)
 			throw new UpdateFailedException("Cannot update account");
-
 	}
 
 	public void delete(String memid) {
-		int count = jdbcTemplate.update("delete member where id = ?", memid);
+		int count = jdbcTemplate.update("delete from tblMembers where MemId = ?", memid);
 		if (count != 1)
 			throw new DeleteFailedException("Cannot delete account");
 	}
