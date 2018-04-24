@@ -9,12 +9,12 @@ import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.jdbc.object.MappingSqlQuery;
 
 @Configuration
-public class Ch4Configuration {
+public class Assgn1Configuration {
     @Bean
     public DataSource dataSource() {
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
-        dataSource.setDriverClassName("com.mysql.jdbc.Driver");
-        dataSource.setUrl("jdbc:mysql://localhost/CLUB294?serverTimezone=UTC");
+        dataSource.setDriverClassName("com.mysql.cj.jdbc.Driver");
+        dataSource.setUrl("jdbc:mysql://localhost/CLUB294?serverTimezone=UTC&useSSL=false");
         dataSource.setUsername("webapp_user");
         dataSource.setPassword("testing123");
         return dataSource;
@@ -34,13 +34,10 @@ public class Ch4Configuration {
         memberDao.setMemberByIdQuery(memberByIdQuery());
         return memberDao;
     }
-  
-    
+ 
     @Bean
     public MappingSqlQuery<Member> memberByIdQuery() {
         MemberByIdQuery query = new MemberByIdQuery(dataSource());
         return query;
     }
-
-
 }
