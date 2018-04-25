@@ -33,20 +33,32 @@ public class MemberDaoJdbcImpl implements MemberDao {
 		PreparedStatementCreatorFactory psCreatorFactory = new PreparedStatementCreatorFactory(
 				"insert into tblMembers (MemId, LastName, FirstName, MiddleName, Status, Memdt, Password) values(?,?,?,?,?,?,?)",
 				new int[] { Types.CHAR, Types.CHAR, Types.CHAR, Types.CHAR, Types.CHAR, Types.DATE, Types.CHAR });
-		int count = jdbcTemplate.update(
-				psCreatorFactory.newPreparedStatementCreator(new Object[] { member.getMemid(), member.getLastname(),
-						member.getFirstname(), member.getMiddlename(), member.getStatus(), member.getMemdt(), member.getPassword() }));
+		int count = jdbcTemplate.update(psCreatorFactory.newPreparedStatementCreator(
+				new Object[] { member.getMemid(), member.getLastname(), member.getFirstname(), member.getMiddlename(),
+						member.getStatus(), member.getMemdt(), member.getPassword() }));
 		if (count != 1)
 			throw new InsertFailedException("Cannot insert member");
 	}
 
 	public void update(Member member) {
-		int count = jdbcTemplate.update("LastName, FirstName,MiddleName,Status,Password) = (?,?,?,?,?) where id = ?",
+		int count = jdbcTemplate.update(
+				"Update tblMembers set LastName = ?, FirstName = ?, MiddleName = ?, Status = ?, Password = ? where MemId = ?",
 				member.getLastname(), member.getFirstname(), member.getMiddlename(), member.getStatus(),
-				member.getPassword());
+				member.getPassword(), member.getMemid());
 		if (count != 1)
 			throw new UpdateFailedException("Cannot update account");
 	}
+
+	// public void update(Member member) {
+	// // try {
+	// jdbcTemplate.update("Update tblMembers set Status = 'T' where MemId = ?",
+	// member.getMemid());
+	// System.out.println(member.toString());
+	// // } catch (final DataAccessException ex) {
+	// // ex.printStackTrace();
+	// // }
+	//
+	// }
 
 	public void delete(String memid) {
 		int count = jdbcTemplate.update("delete from tblMembers where MemId = ?", memid);
@@ -55,7 +67,8 @@ public class MemberDaoJdbcImpl implements MemberDao {
 	}
 
 	public Member find(String memid) {
-		return jdbcTemplate.queryForObject("select MemID, LastName, FirstName, Status, MemDt from tblMembers where MemID = ?",
+		return jdbcTemplate.queryForObject(
+				"select MemID, LastName, FirstName, Status, MemDt from tblMembers where MemID = ?",
 				new RowMapper<Member>() {
 					public Member mapRow(ResultSet rs, int rowNum) throws SQLException {
 						Member member = new Member();

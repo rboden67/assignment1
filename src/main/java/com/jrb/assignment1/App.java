@@ -48,10 +48,16 @@ public class App {
 		System.out.println("\nNew member inserted");
 		System.out.println(member.toString());
 
-		// account.setBalance(30.0);
+		// Update member
+		member.setStatus("T");
+		memberDao.update(member);
+		member = memberDao.find(member.getMemid());
+		System.out.println("\nMember updated");
+		System.out.println(member.toString());
 		
 		// delete member
-		memberDao.delete("A123");
+		memberDao.delete(member.getMemid());
+		System.out.println("\nMember deleted");
 
 		applicationContext.close();
 	}
