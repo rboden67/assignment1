@@ -49,17 +49,6 @@ public class MemberDaoJdbcImpl implements MemberDao {
 			throw new UpdateFailedException("Cannot update account");
 	}
 
-	// public void update(Member member) {
-	// // try {
-	// jdbcTemplate.update("Update tblMembers set Status = 'T' where MemId = ?",
-	// member.getMemid());
-	// System.out.println(member.toString());
-	// // } catch (final DataAccessException ex) {
-	// // ex.printStackTrace();
-	// // }
-	//
-	// }
-
 	public void delete(String memid) {
 		int count = jdbcTemplate.update("delete from tblMembers where MemId = ?", memid);
 		if (count != 1)
